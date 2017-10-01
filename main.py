@@ -2,6 +2,13 @@ import time
 from elevator import *
 from robot import *
 
+client_id="555dbfe3-a660-4cdd-b984-782db54521da"
+client_secret="H1fM0hP0kO3tT8uW4rB3cG3tX4wL6bV0wD5tN4uL6lG2yO2mC6"
+building_id=9990000508
+
+source_area="area:9990000508:1000"
+dest_area="area:9990000508:5000"
+
 def display(s):
     print('"%s"' % s)
     time.sleep(1)
@@ -25,7 +32,7 @@ display("Heading home?")
 # Betty says "yes"
 #display("Escort Betty home")
 beep("Call elevator")        # POST /building/{id}/call { lobby, Betty's floor}
-call_elevator()                 ####### TODO #######
+call_object = call_elevator(building_id, source_area, dest_area)                 ####### TODO #######
 beep("Follow Betty")
 
 # Porter opens building entry.
@@ -35,14 +42,14 @@ beep("Open building entry")
 follow_until_stop()             ####### TODO #######
 
 beep("Wait for elevator")
-wait_for_elevator_at_start()
+wait_for_elevator_at_start(call_object)
 beep("Enter elevator")
 
 # Betty & Porter enter & walk to elevator
 follow_until_stop()
 
 beep("Wait for Betty's floor")
-wait_for_elevator_at_dest()
+wait_for_elevator_at_dest(call_object)
 beep("Leave elevator")
 
 # Betty & Porter leave elevator, walk to her door.
